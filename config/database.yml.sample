@@ -8,14 +8,15 @@ default: &default
 
 development:
   <<: *default
-  database: online_fitness_booking_api_development
+  database: team_editor_api_development
 
 test:
   <<: *default
-  database: online_fitness_booking_api_test
+  database: team_editor_api_development
 
 production:
   <<: *default
-  database: online_fitness_booking_api_production
-  # username: online_fitness_booking_api
-  # password: <%= ENV['ONLINE_FITNESS_BOOKING_API_DATABASE_PASSWORD'] %>
+  database: team_editor_api_development
+  # username: tteam_editor_api_development
+  # password: <%= ENV['team-_API_DATABASE_PASSWORD'] %>
+
