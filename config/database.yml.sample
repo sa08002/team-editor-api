@@ -17,6 +17,6 @@ test:
 production:
   <<: *default
   database: team_editor_api_development
-  # username: tteam_editor_api_development
+  # username: team_editor_api_development
   # password: <%= ENV['team-_API_DATABASE_PASSWORD'] %>
 
