@@ -52,3 +52,8 @@ Rails/UnknownEnv:
 
 Rails/NotNullColumn:
   Enabled: false
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+
