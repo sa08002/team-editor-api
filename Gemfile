@@ -22,6 +22,7 @@ group :development, :test do
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "annotate"
 end
 
 group :development do
