@@ -32,4 +32,42 @@ RSpec.describe "V1::Auth::Registrations", type: :request do
       end
     end
   end
+
+
+  describe "POST /v1/auth/sign_in" do
+    subject { post(v1_user_session_path, params: params) }
+    context "ログイン時" do
+      let(:user) { create(:user) }
+      let(:params) { { name: user.name, email: user.email, password: user.password } }
+      it "トークン情報を取得でき、正常にログインできる。" do
+        subject
+        expect(headers["access-token"]).to be_present
+        expect(headers["client"]).to be_present
+        expect(headers["uid"]).to be_present
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context "ログイン時、email の入力が違う場合" do
+      let(:user) { create(:user) }
+      let(:params) { { name: user.name, email: Faker::Internet.email, password: user.password } }
+      it "ログインできない。" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res["errors"]).to include "Invalid login credentials. Please try again."
+        expect(response).to have_http_status(401)
+      end
+    end
+    
+    context "ログイン時、password の入力が違う場合" do
+      let(:user) { create(:user) }
+      let(:params) { { name: user.name, email: user.email, password: Faker::Internet.password } }
+      it "ログインできない。" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res["errors"]).to include "Invalid login credentials. Please try again."
+        expect(response).to have_http_status(401)
+      end
+    end
+  end
 end
