@@ -12,7 +12,29 @@ RSpec.describe "V1::Articles", type: :request do
       expect(res.length).to eq 3
       expect(res[0].keys).to eq ["id", "title", "content", "user_id", "created_at", "updated_at"]
       expect(response).to have_http_status(200)
-      binding.pry
+    end
+  end
+
+  describe "GET /v1/articles/:id" do
+    subject { get(v1_article_path(article_id)) }
+    context "指定した id の記事が存在する場合" do
+      let(:article) { create(:article) }
+      let(:article_id) { article.id }
+      it "記事の値が取得できる" do
+        subject
+        res = JSON.parse(response.body)
+        expect(response).to have_http_status(200)
+        expect(res["title"]).to eq article.title
+        expect(res["content"]).to eq article.content
+        expect(res["user_id"]).to eq article.user_id
+      end
+    end
+
+    context "指定した id の記事が存在しない場合" do
+      let(:article_id) { 100000 }
+      it "記事の値が取得できない" do
+        expect { subject }.to raise_error ActiveRecord::RecordNotFound
+      end
     end
   end
 end
