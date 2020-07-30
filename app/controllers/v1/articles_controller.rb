@@ -5,4 +5,9 @@ class V1::ArticlesController < ApplicationController
     render json: articles
   end
 
+  def show
+    @article = Article.find(params[:id])
+    render json: @article
+  end
+
 end
