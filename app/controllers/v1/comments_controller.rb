@@ -1,5 +1,4 @@
-class V1::CommentsController < ApplicationController
-  protect_from_forgery with: :null_session
+class V1::CommentsController < BaseApiController
 
   def index
     comments = Comment.all
