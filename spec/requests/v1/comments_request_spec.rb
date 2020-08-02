@@ -72,15 +72,16 @@ RSpec.describe "V1::Comments", type: :request do
 
   describe "PATCH /v1/comments/:id" do
     subject { patch(v1_comment_path(comment.id), params: params, headers: headers) }
+    context "ログインしているユーザーのコメントがある時" do
+      let(:params) { { comment: attributes_for(:comment, user_id: current_v1_user.id) } }
+      let!(:comment) { create(:comment, user: current_v1_user) }
+      let!(:current_v1_user) { create(:user) }
+      let(:headers) { current_v1_user.create_new_auth_token }
 
-    let(:params) { { comment: attributes_for(:comment, user_id: current_v1_user.id) } }
-    let!(:comment) { create(:comment, user: current_v1_user) }
-    let!(:current_v1_user) { create(:user) }
-    let(:headers) { current_v1_user.create_new_auth_token }
-
-    it "記事の更新ができる" do
-      expect { subject }.to change { comment.reload.content }.from(comment.content).to(params[:comment][:content])
-      expect(response).to have_http_status(:ok)
+      it "コメントの更新ができる" do
+        expect { subject }.to change { comment.reload.content }.from(comment.content).to(params[:comment][:content])
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 end

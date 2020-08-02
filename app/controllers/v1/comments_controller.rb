@@ -18,7 +18,6 @@ class V1::CommentsController < ApplicationController
   end
 
   def show
-    # binding.pry
     comment = Comment.find(params[:id])
     render json: comment
   end
@@ -32,10 +31,6 @@ class V1::CommentsController < ApplicationController
   private
 
     def comment_params
-      # binding.pry
       params.require(:comment).permit(:content, :article_id)
     end
 end
-# "uid":"koni1@koni.com",
-# "client":"ohNY4fU8MrzMNxe8lPhY9w",
-# "access-token":"kJ91gpXrPAM2OME-y5XBlg",
