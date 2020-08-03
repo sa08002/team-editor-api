@@ -15,6 +15,7 @@ RSpec.describe "V1::Articles", type: :request do
     end
   end
 
+
   describe "GET /v1/articles/:id" do
     subject { get(v1_article_path(article_id)) }
     context "指定した id の記事が存在する場合" do
@@ -34,6 +35,20 @@ RSpec.describe "V1::Articles", type: :request do
       let(:article_id) { 100000 }
       it "記事の値が取得できない" do
         expect { subject }.to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
+
+  describe "POST /v1/articles" do
+    subject { post(v1_articles_path, params: params, headers: headers) }
+    context "正常に記事が投稿された場合" do
+      let!(:current_v1_user) { create(:user) }
+      let(:headers) { current_v1_user.create_new_auth_token }
+      let(:params) { { article: attributes_for(:article) } }
+      it "記事のレコードが作成される" do
+        expect { subject }.to change { current_v1_user.articles.count }.by(1)
+        expect(response).to have_http_status(200)
       end
     end
   end

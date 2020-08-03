@@ -20,7 +20,7 @@
 FactoryBot.define do
   factory :article do
     title { Faker::Lorem.sentence }
-    content { Faker::Books::Lovecraft.paragraphs }
+    content { Faker::Lorem.sentence }
     user 
   end
 end
