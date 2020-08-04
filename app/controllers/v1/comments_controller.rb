@@ -1,4 +1,4 @@
-class V1::CommentsController < BaseApiController
+class V1::CommentsController < V1::BaseApiController
 
   def index
     comments = Comment.all
@@ -6,12 +6,12 @@ class V1::CommentsController < BaseApiController
   end
 
   def create
-    comment = current_v1_user.comments.create!(comment_params)
+    comment = current_user.comments.create!(comment_params)
     render json: comment
   end
 
   def destroy
-    comment = current_v1_user.comments.find(params[:id])
+    comment = current_user.comments.find(params[:id])
     comment.destroy!
     render json: comment
   end
@@ -22,7 +22,7 @@ class V1::CommentsController < BaseApiController
   end
 
   def update
-    comment = current_v1_user.comments.find(params[:id])
+    comment = current_user.comments.find(params[:id])
     comment.update!(comment_params)
     render json: comment
   end
