@@ -10,7 +10,7 @@ RSpec.describe "V1::Comments", type: :request do
 
       context "コメント対象の記事が存在する時" do
         let(:article) { create(:article) }
-        let(:params) { { comment: attributes_for(:comment,article_id: article.id) } }
+        let(:params) { { comment: attributes_for(:comment, article_id: article.id) } }
 
         it "コメントができる" do
           expect { subject }.to change { current_user.comments.count }.by(1)
@@ -45,10 +45,9 @@ RSpec.describe "V1::Comments", type: :request do
   end
 
   describe "GET /v1/articles/:article_id/comments/:id" do
-    subject { get(v1_article_comment_path(article,comment_id)) }
+    subject { get(v1_article_comment_path(article, comment_id)) }
 
     context "任意の記事に" do
-
       let(:article) { create(:article) }
 
       context "指定したコメントがある場合" do
@@ -56,7 +55,6 @@ RSpec.describe "V1::Comments", type: :request do
         let(:comment_id) { comment.id }
 
         it "コメントの詳細が見れる" do
-
           subject
           res = JSON.parse(response.body)
           expect(res["id"]).to eq comment.id
@@ -70,7 +68,7 @@ RSpec.describe "V1::Comments", type: :request do
   end
 
   describe "DELETE /v1/articles/:article_id/comments/:id" do
-    subject { delete(v1_article_comment_path(article,comment_id), params: params, headers: headers) }
+    subject { delete(v1_article_comment_path(article, comment_id), params: params, headers: headers) }
 
     context "任意の記事に" do
       let(:article) { create(:article) }
@@ -91,7 +89,7 @@ RSpec.describe "V1::Comments", type: :request do
   end
 
   describe "PATCH /v1/articles/:article_id/comments/:id" do
-    subject { patch(v1_article_comment_path(article,comment_id), params: params, headers: headers) }
+    subject { patch(v1_article_comment_path(article, comment_id), params: params, headers: headers) }
 
     context "任意の記事に" do
       let(:article) { create(:article) }

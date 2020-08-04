@@ -1,5 +1,4 @@
 class V1::CommentsController < V1::BaseApiController
-
   def index
     comments = Comment.all
     render json: comments
