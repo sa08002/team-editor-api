@@ -5,7 +5,6 @@ Rails.application.routes.draw do
     }
     resources :articles do
       resources :comments, controller: "articles/comments"
-
     end
   end
 end

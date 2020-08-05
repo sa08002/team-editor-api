@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "V1::Articles::Comments", type: :request do
-  describe "POST /v1/articles/:article_id/comments" do 
+  describe "POST /v1/articles/:article_id/comments" do
     subject { post(v1_article_comments_path(article), params: params, headers: headers) }
 
     context "ユーザーがログインしていて" do
@@ -27,10 +27,10 @@ RSpec.describe "V1::Articles::Comments", type: :request do
 
     context "任意の記事に" do
       let(:article) { create(:article) }
-      let(:article_id){article.id}
+      let(:article_id) { article.id }
 
       context "コメントがある時" do
-        let!(:comment){create_list(:comment,3 ,article_id: article.id)}
+        let!(:comment) { create_list(:comment, 3, article_id: article.id) }
         it "コメントの一覧が取得できる" do
           subject
           res = JSON.parse(response.body)
