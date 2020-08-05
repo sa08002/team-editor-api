@@ -4,7 +4,8 @@ Rails.application.routes.draw do
       registrations: "v1/auth/registrations",
     }
     resources :articles do
-      resources :comments
+      resources :comments, controller: "articles/comments"
+
     end
   end
 end
