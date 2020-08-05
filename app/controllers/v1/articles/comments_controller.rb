@@ -1,6 +1,7 @@
-class V1::CommentsController < V1::BaseApiController
+class V1::Articles::CommentsController < V1::BaseApiController
   def index
-    comments = Comment.all
+    article = Article.find(params[:article_id])
+    comments = article.comments.all
     render json: comments
   end
 
