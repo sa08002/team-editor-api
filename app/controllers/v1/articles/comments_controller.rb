@@ -1,12 +1,15 @@
 class V1::Articles::CommentsController < V1::BaseApiController
   def index
     article = Article.find(params[:article_id])
-    comments = article.comments.all
+    comments = article.comments
     render json: comments
   end
 
   def create
-    comment = current_user.comments.create!(comment_params)
+    article=Article.find(params[:article_id])
+    comment = current_user.comments.new(comment_params)
+    comment.article=article
+    comment.save!
     render json: comment
   end
 
@@ -30,6 +33,6 @@ class V1::Articles::CommentsController < V1::BaseApiController
   private
 
     def comment_params
-      params.require(:comment).permit(:content, :article_id)
+      params.require(:comment).permit(:content)
     end
 end
