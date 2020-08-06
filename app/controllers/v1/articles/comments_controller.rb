@@ -6,9 +6,9 @@ class V1::Articles::CommentsController < V1::BaseApiController
   end
 
   def create
-    article=Article.find(params[:article_id])
+    article = Article.find(params[:article_id])
     comment = current_user.comments.new(comment_params)
-    comment.article=article
+    comment.article = article
     comment.save!
     render json: comment
   end
