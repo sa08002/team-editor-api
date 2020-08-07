@@ -51,6 +51,9 @@ RSpec.describe "V1::Articles", type: :request do
       it "記事のレコードが作成される" do
         expect { subject }.to change { current_v1_user.articles.count }.by(1)
         expect(response).to have_http_status(:ok)
+        res = JSON.parse(response.body)
+        expect(res["title"]).to eq params[:article][:title]
+        expect(res["content"]).to eq params[:article][:content]
       end
     end
   end
