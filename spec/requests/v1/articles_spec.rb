@@ -47,7 +47,7 @@ RSpec.describe "V1::Articles", type: :request do
     context "正常に記事が投稿された場合" do
       let!(:current_v1_user) { create(:user) }
       let(:headers) { current_v1_user.create_new_auth_token }
-      let(:params) { { article: attributes_for(:article) } }
+      let(:params) { { article: attributes_for(:article).slice(:title, :content) } }
       it "記事のレコードが作成される" do
         expect { subject }.to change { current_v1_user.articles.count }.by(1)
         expect(response).to have_http_status(:ok)
