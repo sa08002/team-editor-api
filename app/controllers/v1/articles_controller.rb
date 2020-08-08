@@ -10,7 +10,7 @@ class V1::ArticlesController < ApplicationController
   end
 
   def create
-    article = current_v1_user.articles.create!(article_params)
+    article = current_user.articles.create!(article_params)
     render json: article
   end
 
