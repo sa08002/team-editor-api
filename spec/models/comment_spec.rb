@@ -22,5 +22,34 @@
 require "rails_helper"
 
 RSpec.describe Comment, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "必要な値がある場合" do
+    let(:comment) { build(:comment) }
+    it "comment が作られる" do
+      expect(comment.valid?).to eq true
+    end
+  end
+
+  context "content が空の場合" do
+    let(:comment) { build(:comment, content: nil) }
+    it "エラーする" do
+      comment.valid?
+      expect(comment.errors.messages[:content]).to include "can't be blank"
+    end
+  end
+
+  context "article が空の場合" do
+    let(:comment) { build(:comment, article: nil) }
+    it "エラーする" do
+      comment.valid?
+      expect(comment.errors.messages[:article]).to include "must exist"
+    end
+  end
+
+  context "ユーザーがいない場合" do
+    let(:comment) { build(:comment, user: nil) }
+    it "エラーする" do
+      comment.valid?
+      expect(comment.errors.messages[:user]).to include "must exist"
+    end
+  end
 end
