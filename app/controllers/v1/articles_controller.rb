@@ -14,6 +14,13 @@ class V1::ArticlesController < V1::BaseApiController
     render json: article
   end
 
+  def update
+    article = Article.find(params[:id])
+    article.update!(article_params)
+    render json: article
+  end
+
+  
   private
 
     def article_params
