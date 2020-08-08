@@ -1,4 +1,4 @@
-class V1::ArticlesController < ApplicationController
+class V1::ArticlesController < V1::BaseApiController
   def index
     articles = Article.all
     render json: articles
