@@ -21,7 +21,7 @@ require "rails_helper"
 
 RSpec.describe Article, type: :model do
   context "正常に入力されている場合" do
-    let(:article) { create(:article) }
+    let(:article) { build(:article) }
     it "記事が作られる" do
       expect(article).to be_valid
     end
