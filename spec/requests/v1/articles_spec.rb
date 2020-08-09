@@ -71,4 +71,18 @@ RSpec.describe "V1::Articles", type: :request do
       end
     end
   end
+
+  describe "DELETE /v1/articles/:id" do
+    subject { delete(v1_article_path(article.id), headers: headers) }
+
+    context "正常に記事が削除された場合" do
+      let!(:current_user) { create(:user) }
+      let(:headers) { current_user.create_new_auth_token }
+      let!(:article) { create(:article) }
+      it "任意のレコードを削除できる" do
+        expect { subject }.to change { Article.count }.by(-1)
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
 end
