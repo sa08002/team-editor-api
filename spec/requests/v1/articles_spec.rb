@@ -56,4 +56,19 @@ RSpec.describe "V1::Articles", type: :request do
       end
     end
   end
+
+  describe "PATCH /v1/articles/:id" do
+    subject { patch(v1_article_path(article.id), params: params, headers: headers) }
+
+    context "正常に記事が変更された場合" do
+      let!(:current_user) { create(:user) }
+      let(:headers) { current_user.create_new_auth_token }
+      let(:params) { { article: { title: Faker::Lorem.sentence, created_at: Time.current } } }
+      let(:article) { create(:article) }
+      it "任意のレコードを更新できる" do
+        expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title])
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
 end
