@@ -20,6 +20,12 @@ class V1::ArticlesController < V1::BaseApiController
     render json: article
   end
 
+  def destroy
+    article = Article.find(params[:id])
+    article.destroy!
+    render json: article
+  end
+
   
   private
 
