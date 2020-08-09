@@ -26,7 +26,6 @@ class V1::ArticlesController < V1::BaseApiController
     render json: article
   end
 
-  
   private
 
     def article_params

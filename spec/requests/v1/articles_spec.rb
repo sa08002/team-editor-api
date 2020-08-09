@@ -67,7 +67,7 @@ RSpec.describe "V1::Articles", type: :request do
       let(:article) { create(:article) }
       it "任意のレコードを更新できる" do
         expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title])
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
     end
   end
@@ -81,7 +81,7 @@ RSpec.describe "V1::Articles", type: :request do
       let!(:article) { create(:article) }
       it "任意のレコードを削除できる" do
         expect { subject }.to change { Article.count }.by(-1)
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
     end
   end
