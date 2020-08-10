@@ -64,9 +64,10 @@ RSpec.describe "V1::Articles", type: :request do
       let!(:current_user) { create(:user) }
       let(:headers) { current_user.create_new_auth_token }
       let(:params) { { article: { title: Faker::Lorem.sentence, created_at: Time.current } } }
-      let(:article) { create(:article) }
+      let(:article) { create(:article, user: current_user) }
       it "任意のレコードを更新できる" do
-        expect { subject }.to change { Article.find(article.id).title }.from(article.title).to(params[:article][:title])
+        expect { subject }.to change { article.reload.title }.from(article.title).to(params[:article][:title]) &
+          not_change { article.reload.created_at }
         expect(response).to have_http_status(:ok)
       end
     end
@@ -78,7 +79,7 @@ RSpec.describe "V1::Articles", type: :request do
     context "正常に記事が削除された場合" do
       let!(:current_user) { create(:user) }
       let(:headers) { current_user.create_new_auth_token }
-      let!(:article) { create(:article) }
+      let!(:article) { create(:article, user: current_user) }
       it "任意のレコードを削除できる" do
         expect { subject }.to change { Article.count }.by(-1)
         expect(response).to have_http_status(:ok)
