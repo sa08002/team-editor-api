@@ -15,13 +15,13 @@ class V1::ArticlesController < V1::BaseApiController
   end
 
   def update
-    article = Article.find(params[:id])
+    article = current_user.articles.find(params[:id])
     article.update!(article_params)
     render json: article
   end
 
   def destroy
-    article = Article.find(params[:id])
+    article = current_user.articles.find(params[:id])
     article.destroy!
     render json: article
   end
