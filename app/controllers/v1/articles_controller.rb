@@ -14,6 +14,18 @@ class V1::ArticlesController < V1::BaseApiController
     render json: article
   end
 
+  def update
+    article = current_user.articles.find(params[:id])
+    article.update!(article_params)
+    render json: article
+  end
+
+  def destroy
+    article = current_user.articles.find(params[:id])
+    article.destroy!
+    render json: article
+  end
+
   private
 
     def article_params
