@@ -67,7 +67,7 @@ RSpec.describe "V1::Articles", type: :request do
       let(:article) { create(:article, user: current_user) }
       it "任意のレコードを更新できる" do
         expect { subject }.to change { article.reload.title }.from(article.title).to(params[:article][:title]) &
-          not_change { article.reload.created_at }
+                              not_change { article.reload.created_at }
         expect(response).to have_http_status(:ok)
       end
     end
