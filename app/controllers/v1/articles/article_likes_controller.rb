@@ -1,16 +1,14 @@
 class V1::Articles::ArticleLikesController < V1::BaseApiController
+  
   def create
-    article = Article.find(params[:article_id])
-    article_like = current_user.article_likes.new
-    article_like.article = article
-    article_like.save!
-    render json: article_like
+    article_like = current_user.article_likes.create!(article_id: params[:article_id])
+    render json: { status: "ok" }
   end
 
   def destroy
     article = Article.find(params[:article_id])
-    article_like = current_user.article_likes.find_by(article_id: article.id)
+    article_like = current_user.article_likes.find_by!(article: article)
     article_like.destroy!
-    render json: article_like
+    render json: { status: "ok" }
   end
 end
