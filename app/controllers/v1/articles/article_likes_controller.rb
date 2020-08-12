@@ -1,7 +1,6 @@
 class V1::Articles::ArticleLikesController < V1::BaseApiController
-  
   def create
-    article_like = current_user.article_likes.create!(article_id: params[:article_id])
+    current_user.article_likes.create!(article_id: params[:article_id])
     render json: { status: "ok" }
   end
 

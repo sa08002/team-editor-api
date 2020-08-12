@@ -10,7 +10,7 @@ RSpec.describe "V1::Articles::ArticleLikes", type: :request do
 
       context "いいね対象の記事が存在する時" do
         let(:article) { create(:article) }
-        let(:article_id){article.id}
+        let(:article_id) { article.id }
         let(:params) { { article_like: attributes_for(:article_like, article: article) } }
 
         it "いいねができる" do
@@ -20,7 +20,7 @@ RSpec.describe "V1::Articles::ArticleLikes", type: :request do
       end
 
       context "いいね対象の記事がない場合" do
-        let(:article_id){1000000}
+        let(:article_id) { 1_000_000 }
         let(:params) { { article_like: attributes_for(:article_like, article_id: 100000) } }
 
         it "いいねできない" do
@@ -48,12 +48,12 @@ RSpec.describe "V1::Articles::ArticleLikes", type: :request do
         end
       end
 
-        context "いいねがない時" do
-          let(:params) { attributes_for(:article_like, article: article) }
-          let(:article_like) { create(:article_like, user: current_user, article: article) }
+      context "いいねがない時" do
+        let(:params) { attributes_for(:article_like, article: article) }
+        let(:article_like) { create(:article_like, user: current_user, article: article) }
 
-          it "いいね数が減らない" do
-            expect { subject }.to change { current_user.article_likes.count }.by(0)
+        it "いいね数が減らない" do
+          expect { subject }.to change { current_user.article_likes.count }.by(0)
         end
       end
     end
