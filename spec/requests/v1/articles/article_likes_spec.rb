@@ -31,7 +31,7 @@ RSpec.describe "V1::Articles::ArticleLikes", type: :request do
   end
 
   describe "DELETE /v1/articles/:article_id/article_likes/:id" do
-    subject { delete(v1_article_article_like_path(article, article_like), params: params, headers: headers) }
+    subject { delete(v1_article_article_like_path(article, article_like), headers: headers) }
 
     context "任意の記事にログインしているユーザーの" do
       let(:article) { create(:article) }
@@ -40,7 +40,6 @@ RSpec.describe "V1::Articles::ArticleLikes", type: :request do
 
       context "いいねがある時" do
         let!(:article_like) { create(:article_like, user: current_user, article: article) }
-        let(:params) { attributes_for(:article_like, article: article) }
 
         it "いいねの削除ができる" do
           expect { subject }.to change { current_user.article_likes.count }.by(-1)
@@ -49,11 +48,12 @@ RSpec.describe "V1::Articles::ArticleLikes", type: :request do
       end
 
       context "いいねがない時" do
-        let(:params) { attributes_for(:article_like, article: article) }
-        let(:article_like) { create(:article_like, user: current_user, article: article) }
+        let(:other_user) { create(:user) }
+        let(:article_like) { create(:article_like, user: other_user, article: article) }
 
-        it "いいね数が減らない" do
-          expect { subject }.to change { current_user.article_likes.count }.by(0)
+        it "見つけられず、削除できない" do
+          expect { subject }.to raise_error(ActiveRecord::RecordNotFound) &
+                                change { current_user.article_likes.count }.by(0)
         end
       end
     end
