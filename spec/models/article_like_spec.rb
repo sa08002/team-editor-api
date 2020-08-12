@@ -21,7 +21,6 @@
 require "rails_helper"
 
 RSpec.describe ArticleLike, type: :model do
-
   context "必要な値がある場合" do
     let(:article_like) { build(:article_like) }
 
@@ -29,6 +28,7 @@ RSpec.describe ArticleLike, type: :model do
       expect(article_like).to be_valid
     end
   end
+
   context "article が空の場合" do
     let(:article_like) { build(:article_like, article: nil) }
     it "いいねできない" do
@@ -46,8 +46,8 @@ RSpec.describe ArticleLike, type: :model do
   end
 
   context "すでにいいねしている場合" do
-    let!(:article_liked){create(:article_like)}
-    let(:article_like){build(:article_like, user: article_liked.user,article: article_liked.article)}
+    let!(:article_liked) { create(:article_like) }
+    let(:article_like) { build(:article_like, user: article_liked.user, article: article_liked.article) }
     it "いいねができない" do
       article_like.valid?
       expect(article_like.errors.messages[:article_id]).to include "has already been taken"
