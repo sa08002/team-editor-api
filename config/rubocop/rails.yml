@@ -55,5 +55,6 @@ Rails/NotNullColumn:
 
 Rails/RakeEnvironment:
   Enabled: false
-
-
+  
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false

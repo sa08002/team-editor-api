@@ -4,9 +4,9 @@ Rails.application.routes.draw do
       registrations: "v1/auth/registrations",
     }
 
-    resources :articles
     resources :articles do
       resources :comments, controller: "articles/comments"
+      resources :article_likes, controller: "articles/article_likes"
     end
   end
 end
