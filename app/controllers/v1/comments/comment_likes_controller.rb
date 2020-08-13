@@ -1,8 +1,6 @@
 class V1::Comments::CommentLikesController < V1::BaseApiController
-
-  def create 
-    comment = Comment.find(params[:comment_id])
-    comment_likes = current_user.comment_likes.create!(comment_id: params[:comment_id])
+  def create
+    current_user.comment_likes.create!(comment_id: params[:comment_id])
     render json: { status: "ok" }
   end
 
