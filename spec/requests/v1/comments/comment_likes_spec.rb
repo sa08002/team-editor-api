@@ -48,8 +48,8 @@ RSpec.describe "V1::Comments::CommentLikes", type: :request do
       end
 
       context "いいねがない時" do
-        let(:other_user) { create(:user) }
-        let(:comment_like) { create(:comment_like, user: other_user, comment: comment) }
+        let(:other_comment) { create(:comment) }
+        let!(:comment_like) { create(:comment_like, user: current_user, comment: other_comment) }
 
         it "見つけられず、削除できない" do
           expect { subject }.to raise_error(ActiveRecord::RecordNotFound) &
