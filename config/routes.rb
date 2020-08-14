@@ -8,5 +8,8 @@ Rails.application.routes.draw do
       resources :comments, controller: "articles/comments"
       resources :article_likes, controller: "articles/article_likes"
     end
+    resources :comments do
+      resources :comment_likes, controller: "comments/comment_likes"
+    end
   end
 end
