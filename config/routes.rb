@@ -7,13 +7,9 @@ Rails.application.routes.draw do
     resources :articles do
       resources :comments, controller: "articles/comments"
       resources :article_likes, controller: "articles/article_likes"
-      collection do
-        get 'search'
-      end
     end
     resources :comments do
       resources :comment_likes, controller: "comments/comment_likes"
     end
   end
-
 end
