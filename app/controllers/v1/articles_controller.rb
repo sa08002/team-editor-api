@@ -1,6 +1,6 @@
 class V1::ArticlesController < V1::BaseApiController
   def index
-    articles = Article.search(params[:search])
+    articles = Article.all
     render json: articles
   end
 
