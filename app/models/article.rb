@@ -25,9 +25,9 @@ class Article < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
 
-  def self.search(search)
-    if search
-      Article.where(["title LIKE ?", "%#{search}%"])
+  def self.search(q)
+    if q.length >= 1
+      Article.where(["title LIKE ?", "%#{q}%"])
     else
       Article.all
     end
