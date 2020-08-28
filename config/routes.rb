@@ -4,6 +4,10 @@ Rails.application.routes.draw do
       registrations: "v1/auth/registrations",
     }
 
+    namespace :articles do
+      resources :searches, only: [:index]
+    end
+
     resources :articles do
       resources :comments, controller: "articles/comments"
       resources :article_likes, controller: "articles/article_likes"
