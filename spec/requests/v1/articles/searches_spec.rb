@@ -23,6 +23,8 @@ RSpec.describe "V1::Articles", type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 2
+        expect(res[0]["title"]).to include "Java"
+        expect(res[1]["title"]).to include "Java"
         expect(response).to have_http_status(:ok)
       end
     end
@@ -33,6 +35,10 @@ RSpec.describe "V1::Articles", type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 4
+        expect(res[0]["title"]).to include "C"
+        expect(res[1]["title"]).to include "C"
+        expect(res[2]["title"]).to include "C"
+        expect(res[3]["title"]).to include "C"
         expect(response).to have_http_status(:ok)
       end
     end
@@ -43,6 +49,7 @@ RSpec.describe "V1::Articles", type: :request do
         subject
         res = JSON.parse(response.body)
         expect(res.length).to eq 1
+        expect(res[0]["title"]).to include "Ruby"
         expect(response).to have_http_status(:ok)
       end
     end
