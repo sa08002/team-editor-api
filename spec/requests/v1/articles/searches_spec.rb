@@ -14,7 +14,7 @@ RSpec.describe "V1::Articles", type: :request do
     create(:article, title: "楽しいSwift")
   end
 
-  describe "GET /v1/articles/searches?q=Java" do
+  describe "GET /v1/articles/searches?q=" do
     subject { get("#{v1_articles_searches_path}?q=#{query}") }
 
     context "データが存在する状態で Java で検索したとき" do
@@ -26,13 +26,29 @@ RSpec.describe "V1::Articles", type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
-  end
 
-  describe "GET /v1/articles/searches?q=" do
-    subject { get("#{v1_articles_searches_path}?q=#{query}") }
+    context "データが存在する状態で C で検索したとき" do
+      let(:query) { "C" }
+      it "C を含んだデータが表示される" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res.length).to eq 4
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "データが存在する状態で Ruby で検索したとき" do
+      let(:query) { "Ruby" }
+      it "Ruby を含んだデータが表示される" do
+        subject
+        res = JSON.parse(response.body)
+        expect(res.length).to eq 1
+        expect(response).to have_http_status(:ok)
+      end
+    end
 
     context "検索項目が空の場合" do
-      let(:query) { "" }
+      let(:query) { nil }
       it "全データが表示される" do
         subject
         res = JSON.parse(response.body)
@@ -40,10 +56,6 @@ RSpec.describe "V1::Articles", type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
-  end
-
-  describe "GET /v1/articles/searches?q=PHP" do
-    subject { get("#{v1_articles_searches_path}?q=#{query}") }
 
     context "一致するデータがない PHP で検索したとき" do
       let(:query) { "PHP" }
