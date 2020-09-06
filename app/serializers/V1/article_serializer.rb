@@ -6,6 +6,6 @@ class V1::ArticleSerializer < ActiveModel::Serializer
 
   def is_my_article?
     current_user = scope.current_v1_user
-    object.user_id == current_user.id
+    object.user == current_user
   end
 end
