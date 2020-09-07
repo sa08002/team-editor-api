@@ -420,3 +420,6 @@ Style/ZeroLengthPredicate:
 
 Style/SpecialGlobalVars:
   Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
