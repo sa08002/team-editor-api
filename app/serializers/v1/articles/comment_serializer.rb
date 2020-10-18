@@ -1,4 +1,4 @@
-class V1::CommentSerializer < ActiveModel::Serializer
+class V1::Articles::CommentSerializer < ActiveModel::Serializer
   attributes :id, :content, :created_at, :updated_at
   belongs_to :user
   belongs_to :article
